@@ -48,7 +48,7 @@ class DiscountCalculator(private val strategies: List<DiscountStrategy>) {
 // 5. 工廠：將業務類型映射到策略組合
 enum class MembershipType { REGULAR, VIP, SUPER_VIP }
 
-object DiscountFactory {
+data object DiscountFactory {
     fun createFor(type: MembershipType): DiscountCalculator {
         val rate = when (type) {
             MembershipType.REGULAR -> "0.0"
