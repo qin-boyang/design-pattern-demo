@@ -139,7 +139,13 @@ src/
 
 ## 👥 贡献
 
-欢迎提交 Issue 和 Pull Request 来改进这个演示项目。
+- Factory: 怎么创建对象。
+- Strategy: 怎么换算法。
+- State: 怎么变状态。
+- Observer: 怎么发通知。
+- Decorator: 怎么套外壳。
+- Command: 怎么“封装”动作
+
 
 ## 📌 Summary
 - State Pattern:
@@ -220,6 +226,73 @@ class Xxx(val strategies: List<XxxStrategy>) {
         for (strategy in strategies) {
             strategy.doSomething()
         }
+    }
+}
+```
+- Observer Pattern:
+```kotlin
+interface XxxObserver {
+    fun onStatuesChanged(newStatus: String)
+}
+class Xxx() {
+    private val observers = mutableListOf<XxxObserver>()
+    fun attach(observer: XxxObserver) {
+        observers.add(observer)
+    }
+    fun detach(observer: XxxObserver) {
+        observers.remove(observer)
+    }
+    fun notifyObservers(newStatus: String) {
+        observers.forEach {it.onStatuesChanged(newStatus)}
+    }
+}
+```
+- Decorator Pattern:
+```kotlin
+interface Xxx {
+    fun getPrice(): Double
+}
+class BasicXxx : Xxx {
+    override fun getPrice(): Double {
+        return 10.0
+    }
+}
+class XxxWithAddOns1Decorator(private val basicXxx: Xxx) : Xxx {
+    override fun getPrice(): Double {
+        return basicXxx.getPrice() + 2.0
+    }
+}
+class XxxWithAddOns2Decorator(private val basicXxx: Xxx) : Xxx {
+    override fun getPrice(): Double {
+        return basicXxx.getPrice() + 3.0
+    }
+}
+// Usage:
+    val basicXxx = BasicXxx()
+    val xxxWithAddOns1 = XxxWithAddOns1Decorator(basicXxx)
+    val xxxWithAddOns2 = XxxWithAddOns2Decorator(xxxWithAddOns1)
+// or
+    val xxxWithAddOns = XxxWithAddOns2Decorator(XxxWithAddOns1Decorator(BasicXxx()))
+```
+- Command Pattern:
+```kotlin
+interface XxxCommand {
+    fun execute()
+    fun undo()
+}
+class XxxCommand : XxxCommand {
+    override fun execute() {}
+    override fun undo() {}
+}
+class XxxInvoker {
+    private val commands = mutableListOf<XxxCommand>()
+    fun addCommand(command: XxxCommand) {
+        commands.add(command)
+        command.execute()
+    }
+    fun undoLastCommand() {
+        commands.lastOrNull()?.undo()
+        commands.removeLastOrNull()
     }
 }
 ```

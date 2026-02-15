@@ -7,7 +7,7 @@ plugins {
 
 group = "com.mycompany.myproject"
 version = "0.0.1-SNAPSHOT"
-description = "demo"
+description = "design-pattern-demo"
 
 java {
     toolchain {

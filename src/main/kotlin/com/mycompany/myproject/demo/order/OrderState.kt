@@ -99,10 +99,10 @@ class Order {
     var state: OrderState = OrderState.New
 
     fun operate(command : Command) {
-        when (command) {
-            Command.Pay -> state = state.pay()
-            Command.Ship -> state = state.ship()
-            Command.Cancel -> state = state.cancel()
+        state = when (command) {
+            Command.Pay -> state.pay()
+            Command.Ship -> state.ship()
+            Command.Cancel -> state.cancel()
         }
     }
     fun getStateName() = state.name()
