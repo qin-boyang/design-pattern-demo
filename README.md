@@ -145,6 +145,7 @@ src/
 - Observer: 怎么发通知。
 - Decorator: 怎么套外壳。
 - Command: 怎么“封装”动作
+- SDL: How to write Kotlin DSL 
 
 
 ## 📌 Summary
