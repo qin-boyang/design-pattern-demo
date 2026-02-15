@@ -7,7 +7,7 @@ class PaymentMethodTest {
 
     @Test
     fun `pay with credit card`() {
-        val paymentMethod = PaymentMethod.create(PaymentMethodType.Card)
+        val paymentMethod = PaymentMethod.create(PaymentMethodType.Card, "1234567890")
         val paymentFee = paymentMethod.calculatePaymentFee()
         assertEquals(0.5, paymentFee)
     }

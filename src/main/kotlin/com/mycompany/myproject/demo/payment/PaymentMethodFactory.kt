@@ -12,9 +12,9 @@ sealed class PaymentMethod {
 
     // Factory method inside the sealed class itself
     companion object {
-        fun create(type: PaymentMethodType): PaymentMethod = when(type) {
+        fun create(type: PaymentMethodType, cardnumber: String? = ""): PaymentMethod = when(type) {
             PaymentMethodType.Cash -> Cash
-            PaymentMethodType.Card -> Card("0000-1111")
+            PaymentMethodType.Card -> Card(cardnumber.orEmpty())
             PaymentMethodType.UNKNOWN -> throw Exception()
         }
     }
