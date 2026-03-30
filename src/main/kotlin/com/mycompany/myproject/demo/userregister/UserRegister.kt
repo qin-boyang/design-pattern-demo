@@ -1,34 +1,17 @@
 package com.mycompany.myproject.demo.userregister
 
+enum class Listeners{ EMAIL_LISTENER, SMS_LISTENER, SCORE_LISTENER, SOME_OTHER_LISTENER }
+
 sealed class UserRegisterListener {
-    companion object {
-        fun getListeners(): List<UserRegisterListener> {
-            return listOf(
-                EmailListener(),
-                SmsListener(),
-                ScoreListener()
-            )
-        }
-    }
-
     abstract fun onRegister(event: UserRegisterEvent)
-
     class EmailListener: UserRegisterListener() {
-        override fun onRegister(event: UserRegisterEvent) {
-            println("Sending email")
-        }
+        override fun onRegister(event: UserRegisterEvent) { println("Sending email") }
     }
-
     class SmsListener: UserRegisterListener() {
-        override fun onRegister(event: UserRegisterEvent) {
-            println("Sending SMS")
-        }
+        override fun onRegister(event: UserRegisterEvent) { println("Sending SMS") }
     }
-
     class ScoreListener: UserRegisterListener() {
-        override fun onRegister(event: UserRegisterEvent) {
-            println("Printing score")
-        }
+        override fun onRegister(event: UserRegisterEvent) { println("Printing score") }
     }
 }
 
@@ -39,11 +22,15 @@ class UserService {
         println("Register Event")
         publishEvent(UserRegisterEvent(userName))
     }
-
-    fun publishEvent(event: UserRegisterEvent) {
+    private fun publishEvent(event: UserRegisterEvent) {
         println("Publish Event")
-        for (listener in UserRegisterListener.getListeners()) {
-            listener.onRegister(event)
+        for (listener in Listeners.entries) {
+            when (listener) {
+                Listeners.EMAIL_LISTENER -> UserRegisterListener.EmailListener().onRegister(event)
+                Listeners.SMS_LISTENER -> UserRegisterListener.SmsListener().onRegister(event)
+                Listeners.SCORE_LISTENER -> UserRegisterListener.ScoreListener().onRegister(event)
+                Listeners.SOME_OTHER_LISTENER -> println("Do nothing")
+            }
         }
     }
 }

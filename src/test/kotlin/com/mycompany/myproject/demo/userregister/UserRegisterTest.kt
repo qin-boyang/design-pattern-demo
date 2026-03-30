@@ -4,8 +4,5 @@ import kotlin.test.Test
 
 class UserRegisterTest {
     @Test
-    fun `test register`() {
-        val service = UserService()
-        service.register("John")
-    }
+    fun `test register using listener pattern`() { UserService().register("John") }
 }
